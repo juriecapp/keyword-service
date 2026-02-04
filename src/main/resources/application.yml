@@ -1,0 +1,26 @@
+# src/main/resources/application.yml
+spring:
+  profiles:
+   active: local
+  application:
+    name: sensitive-words-service
+  cloud:
+    config:
+      enabled: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+
+# Add to application.yml
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+    include-exception: false
+
+logging:
+  level:
+    com.example.keywords.controller.advice: DEBUG

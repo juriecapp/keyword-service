@@ -1,0 +1,54 @@
+# src/main/resources/application.yml
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=KeywordDB;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: SQLserver123!
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: KeywordDBPool
+    # Schema configuration for datasource
+    schema: dbo  # Default schema for MSSQL
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        # Schema configuration
+        default_schema: dbo  # Default schema for entities
+        # Or to use different schemas per entity:
+        # hbm2ddl.schema-generation.create-script-source: classpath:schemas.sql
+    show-sql: true
+    # Additional JPA properties for schema management
+    database-platform: org.hibernate.dialect.SQLServer2016Dialect
+    generate-ddl: false  # Set to false since we're using Flyway
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    schemas: dbo  # Specify schema(s) for Flyway
+    default-schema: dbo  # Default schema for migrations
+    # Additional Flyway properties
+    validate-on-migrate: true
+    clean-disabled: true
+    out-of-order: false
+    placeholders:
+      defaultSchema: dbo
+
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
