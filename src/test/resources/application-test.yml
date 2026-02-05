@@ -14,6 +14,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
         format_sql: false
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+          jakarta:
+            cache:
+              provider: org.ehcache.jsr107.EhcacheCachingProvider
 
   flyway:
     enabled: false

@@ -21,13 +21,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        # Schema configuration
-        default_schema: dbo  # Default schema for entities
-        # Or to use different schemas per entity:
-        # hbm2ddl.schema-generation.create-script-source: classpath:schemas.sql
+        default_schema: dbo
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+          jakarta:
+            cache:
+              provider: org.ehcache.jsr107.EhcacheCachingProvider
+
     show-sql: true
-    # Additional JPA properties for schema management
-    database-platform: org.hibernate.dialect.SQLServer2016Dialect
     generate-ddl: false  # Set to false since we're using Flyway
 
   flyway:
